@@ -7,9 +7,9 @@ function Main() {
   return (
     <Router>
       <Route path="/login/" exact component={Login}/>
-      <Route path='/admin/' component={AdminIndex}/>
+      <Route path='/index/' component={AdminIndex}/>
     </Router>
-  )
+  );
 }
 
 export default Main
