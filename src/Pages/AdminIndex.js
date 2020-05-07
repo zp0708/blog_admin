@@ -11,16 +11,21 @@ import {
 import '../static/pages/AdminIndex.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AddArticle from './AddArticle';
+import ArticleList from './ArticleList';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function AdminIndex() {
+function AdminIndex(props) {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
+
+  const handleItemClick = (item) => {
+    props.history.push('/index/' + item.key)
+  }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -31,10 +36,6 @@ function AdminIndex() {
             <PieChartOutlined />
             <span>工作台</span>
           </Menu.Item>
-          <Menu.Item key='2'>
-            <DesktopOutlined />
-            <span>添加文章</span>
-          </Menu.Item>
           <SubMenu
             key='sub1'
             title={
@@ -43,10 +44,11 @@ function AdminIndex() {
                 <span>文章管理</span>
               </span>
             }
+            onClick={handleItemClick}
           >
-            <Menu.Item key='3'>添加文章</Menu.Item>
-            <Menu.Item key='4'>文章列表</Menu.Item>
-            <Menu.Item key='5'>修改记录</Menu.Item>
+            <Menu.Item key='add'>添加文章</Menu.Item>
+            <Menu.Item key='list'>文章列表</Menu.Item>
+            <Menu.Item key='update'>修改记录</Menu.Item>
           </SubMenu>
           <SubMenu
             key='sub2'
@@ -60,9 +62,6 @@ function AdminIndex() {
             <Menu.Item key='6'>留言列表</Menu.Item>
             <Menu.Item key='8'>黑名单</Menu.Item>
           </SubMenu>
-          <Menu.Item key='9'>
-            <FileOutlined />
-          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className='site-layout'>
@@ -74,7 +73,10 @@ function AdminIndex() {
           </Breadcrumb>
           <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
             <div>
-              <Route path='/index/' component={AddArticle} />
+              <Route path='/index/' exact component={AddArticle} />
+              <Route path='/index/add' exact component={AddArticle} />
+              <Route path='/index/add/:id' component={AddArticle} />
+              <Route path='/index/list' component={ArticleList} />
             </div>
           </div>
         </Content>
